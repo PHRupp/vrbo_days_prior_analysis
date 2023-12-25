@@ -111,7 +111,7 @@ data.hist(
     range=[0, data['DaysPrior'].max()],
 )
 """
-#plt.savefig('daysout_hist.png')
+plt.savefig('daysout_hist.png')
 plt.show()
 
 
