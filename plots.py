@@ -53,6 +53,8 @@ class DataStruct:
     widths: float
     x: np.array
 
+days_out_bins = np.array(range(18)) * 30  # bin-size is roughly 1 month (30 days) for 18 months
+
 datastructs: List[DataStruct] = []
 m = 0
 for i in range(nrows):
@@ -62,9 +64,10 @@ for i in range(nrows):
         x = data.loc[ind, 'DaysPrior']
         counts, bins = np.histogram(
             x,
-            bins=NUM_BINS,
+            bins=days_out_bins,
             range=(0, maxDaysPrior),
         )
+        print(bins)
         datastructs.append(
             DataStruct(
                 axs[i, j],
@@ -91,32 +94,19 @@ for i in range(nrows):
         
         ax.bar(
             d.bins[:-1],
-            d.counts,
+            d.counts / max_count,
             align='edge',
             width=d.widths,
         )
         ax.set_xlim(0, maxDaysPrior)
-        ax.set_ylim(0, max_count)
+        ax.set_ylim(0, 1)
+        ax.set_xlabel('Days Prior')
         
         xlin = np.linspace(1, maxDaysPrior)
-        ylin = halfnorm.pdf(xlin, loc=mu, scale=std) * maxDaysPrior
+        ylin = halfnorm.pdf(xlin, loc=mu, scale=std) * len(d.x)
         ax.plot(xlin, ylin, color='red')
         m += 1
-"""
-data.hist(
-    'DaysPrior', 
-    by='Month',
-    xrot=0,
-    figsize=(12,8),
-    range=[0, data['DaysPrior'].max()],
-)
-"""
+
+
 plt.savefig('daysout_hist.png')
 plt.show()
-
-
-
-
-
-
-
