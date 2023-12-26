@@ -37,11 +37,8 @@ month_map = {
 data.loc[:, 'BookingMonth'] = [d.month for d in data['Booking']]
 
 df = data.groupby(['BookingMonth',])['BookingMonth',].count()
-print(df)
-print([month_map.get(i) for i in df.index])
 df.loc[:, 'Month'] = [month_map.get(i) for i in df.index]
 
-df.plot.bar(x='Month', y='BookingMonth')
+df.plot.bar(x='Month', y='BookingMonth', rot=0)
 
-#data.hist('BookingMonth', rwidth=.95)
 plt.show()
