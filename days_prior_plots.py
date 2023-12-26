@@ -6,8 +6,6 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from scipy.stats import halfnorm
 
-NUM_BINS: int = 12
-
 file = 'reservations.xlsx'
 data = pd.read_excel(file)
 #print(data.shape)
